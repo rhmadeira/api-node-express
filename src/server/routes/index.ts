@@ -4,6 +4,10 @@ import { CidadesController } from "../controllers";
 
 const router = Router();
 
-router.post("/teste", CidadesController.create);
+router.get("/", (req, res) => {
+  return res.status(StatusCodes.OK).json({ message: "Hello World" });
+});
+
+router.post("/cidades", CidadesController.create);
 
 export { router };
