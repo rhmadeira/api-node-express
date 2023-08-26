@@ -4,14 +4,13 @@ import * as yup from "yup";
 import { Ifilter } from "../../types/default";
 import { validation } from "../../shared/middlewares";
 
-export const createValidate = validation({
-  body: yup.object().shape({
-    nome: yup.string().required().min(3),
-  }),
-  query: yup.object().shape({
-    filter: yup.string(),
-  }),
-});
+export const createValidate = validation((getSchema) => ({
+  body: getSchema<ICidade>(
+    yup.object().shape({
+      nome: yup.string().required(),
+    })
+  ),
+}));
 
 export const create = async (
   req: Request<any, any, ICidade>,
