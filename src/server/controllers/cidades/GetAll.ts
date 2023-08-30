@@ -4,15 +4,23 @@ import * as yup from "yup";
 import { validation } from "../../shared/middlewares";
 import { StatusCodes } from "http-status-codes";
 
-export const createValidate = validation((getSchema) => ({
-  body: getSchema<ICidade>(
+interface IQuery {
+  page?: number;
+  limit?: number;
+  filter?: string;
+}
+
+export const getAllValidate = validation((getSchema) => ({
+  query: getSchema<IQuery>(
     yup.object().shape({
-      nome: yup.string().required(),
+      page: yup.number().min(1),
+      limit: yup.number().min(1).max(100),
+      filter: yup.string().max(100),
     })
   ),
 }));
 
-export const create = async (
+export const getAll = async (
   req: Request<any, any, ICidade>,
   res: Response
 ) => {
