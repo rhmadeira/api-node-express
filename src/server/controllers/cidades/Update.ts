@@ -2,6 +2,7 @@ import { validation } from "../../shared/middlewares";
 import * as yup from "yup";
 import { ICidade } from "../../types/cidades";
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
 interface IParams {
   id: number;
@@ -24,5 +25,5 @@ export const update = async (
   req: Request<any, any, ICidade>,
   res: Response
 ) => {
-  return res.status(500).json("não implementado");
+  return res.status(StatusCodes.OK).send(StatusCodes.NO_CONTENT);
 };

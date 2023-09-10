@@ -24,5 +24,12 @@ export const getAll = async (
   req: Request<any, any, ICidade>,
   res: Response
 ) => {
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("não implementado");
+  res.setHeader("access-control-expose-headers", "x-total-count");
+  res.setHeader("x-total-count", 1);
+  return res.status(StatusCodes.OK).send([
+    {
+      id: 1,
+      nome: "São Paulo",
+    },
+  ]);
 };

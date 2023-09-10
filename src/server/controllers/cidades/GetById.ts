@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validation } from "../../shared/middlewares";
 import * as yup from "yup";
+import { StatusCodes } from "http-status-codes";
 
 interface IQuery {
   id: number;
@@ -18,5 +19,8 @@ export const getById = async (
   req: Request<any, any, IQuery>,
   res: Response
 ) => {
-  return res.status(500).json("não implementado");
+  return res.status(StatusCodes.OK).json({
+    id: 1,
+    nome: "São Paulo",
+  });
 };
