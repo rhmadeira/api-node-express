@@ -8,7 +8,11 @@
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "knex:migrate": "knex --knexfile ./src/server/database/knex/environment.ts migrate:latest",
+    "knex:rollback": "knex --knexfile ./src/server/database/knex/environment.ts migrate:rollback",
+    "knex:rollback:all": "knex --knexfile ./src/server/database/knex/environment.ts migrate:rollback --all",
+    "knex:seeds": "knex --knexfile ./src/server/database/knex/environment.ts seed:run"
   },
   "dependencies": {
     "@types/jest": "^29.5.4",
@@ -24,7 +28,7 @@
     "@types/express": "^4.17.17",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
-    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6",
     "supertest": "^6.3.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.3"
