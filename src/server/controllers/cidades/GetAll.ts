@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { ICidade } from "../../types/cidades";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares";
 import { StatusCodes } from "http-status-codes";
+import { ICidade } from "../../database/models";
 
 interface IQuery {
   page?: number;
