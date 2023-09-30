@@ -23,11 +23,11 @@ router.get(
   cidadesController.getByIdValidate,
   cidadesController.getById
 );
-// router.put(
-//   "/cidades/:id",
-//   cidadesController.updateValidate,
-//   cidadesController.update
-// );
+router.put(
+  "/cidades/:id",
+  cidadesController.updateValidate,
+  cidadesController.updateById
+);
 router.delete(
   "/cidades/:id",
   cidadesController.deleteValidate,

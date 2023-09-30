@@ -10,7 +10,7 @@ interface IBodyProps extends Omit<ICidade, "id"> {}
 export const createValidate = validation((getSchema) => ({
   body: getSchema<IBodyProps>(
     yup.object().shape({
-      nome: yup.string().required().min(3),
+      nome: yup.string().required().min(3).max(150),
     })
   ),
 }));
@@ -29,7 +29,5 @@ export const create = async (
     });
   }
 
-  return res.status(StatusCodes.CREATED).json({
-    id: result,
-  });
+  return res.status(StatusCodes.CREATED).json(result);
 };

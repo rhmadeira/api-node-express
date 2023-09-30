@@ -23,8 +23,8 @@ export const updateValidate = validation((getSchema) => ({
   ),
 }));
 
-export const update = async (
-  req: Request<IParams, any, IBodyProps>,
+export const updateById = async (
+  req: Request<any, any, IBodyProps>,
   res: Response
 ) => {
   return res.status(StatusCodes.OK).send(StatusCodes.NO_CONTENT);
