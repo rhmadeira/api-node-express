@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
 import { cidadesProvider } from "../../database/providers/cidades";
 interface IParams {
-  id: number;
+  id?: number;
 }
 export const deleteValidate = validation((getSchema) => ({
   params: getSchema<IParams>(
@@ -14,10 +14,15 @@ export const deleteValidate = validation((getSchema) => ({
   ),
 }));
 
-export const deleteById = async (
-  req: Request<any, any, IParams>,
-  res: Response
-) => {
+export const deleteById = async (req: Request<IParams>, res: Response) => {
+  if (!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: "Id is required",
+      },
+    });
+  }
+
   const result = await cidadesProvider.deleteById(req.params.id);
   if (result instanceof Error) {
     return res.status(StatusCodes.BAD_REQUEST).json({

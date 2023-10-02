@@ -4,24 +4,28 @@ import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
 import { cidadesProvider } from "../../database/providers/cidades";
 
-interface IQuery {
-  id: number;
+interface IParams {
+  id?: number;
 }
 
 export const getByIdValidate = validation((getSchema) => ({
-  params: getSchema<IQuery>(
+  params: getSchema<IParams>(
     yup.object().shape({
       id: yup.number().integer().moreThan(0).required(),
     })
   ),
 }));
 
-export const getById = async (
-  req: Request<any, any, IQuery>,
-  res: Response
-) => {
-  const result = await cidadesProvider.getById(req.params.id);
+export const getById = async (req: Request<IParams>, res: Response) => {
+  if (!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: "Id is required",
+      },
+    });
+  }
 
+  const result = await cidadesProvider.getById(req.params.id);
   if (result instanceof Error) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       erros: {

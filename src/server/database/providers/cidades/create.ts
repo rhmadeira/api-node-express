@@ -15,9 +15,9 @@ export const create = async (
     } else if (typeof result === "number") {
       return result;
     } else {
-      return Error("Error on create cidade");
+      return new Error("Error on create cidade");
     }
   } catch (err) {
-    return Error("Error on create cidade");
+    return new Error("Error on create cidade");
   }
 };

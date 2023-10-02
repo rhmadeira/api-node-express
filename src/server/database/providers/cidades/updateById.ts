@@ -3,7 +3,7 @@ import { Knex } from "../../knex";
 import { ICidade } from "../../models";
 
 export const updateById = async (
-  id: string,
+  id: number,
   cidade: Omit<ICidade, "id">
 ): Promise<void | Error> => {
   try {
@@ -12,9 +12,9 @@ export const updateById = async (
       .update(cidade);
 
     if (result > 0) return;
-    else return Error("Cidade not found");
+    else return new Error("Cidade not found");
   } catch (error) {
     console.log(error);
-    return Error("Error on update cidade");
+    return new Error("Error on update cidade");
   }
 };

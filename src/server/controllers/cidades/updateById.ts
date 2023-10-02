@@ -6,7 +6,7 @@ import { ICidade } from "../../database/models";
 import { cidadesProvider } from "../../database/providers/cidades";
 
 interface IParams {
-  id: number;
+  id?: number;
 }
 
 interface IBodyProps extends Omit<ICidade, "id"> {}
@@ -25,11 +25,18 @@ export const updateValidate = validation((getSchema) => ({
 }));
 
 export const updateById = async (
-  req: Request<any, any, IBodyProps>,
+  req: Request<IParams, any, IBodyProps>,
   res: Response
 ) => {
-  const result = await cidadesProvider.updateById(req.params.id, req.body);
+  if (!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: "Id is required",
+      },
+    });
+  }
 
+  const result = await cidadesProvider.updateById(req.params.id, req.body);
   if (result instanceof Error) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       erros: {
