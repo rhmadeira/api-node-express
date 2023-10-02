@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validation } from "../../shared/middlewares";
 import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
+import { cidadesProvider } from "../../database/providers/cidades";
 interface IParams {
   id: number;
 }
@@ -17,5 +18,13 @@ export const deleteById = async (
   req: Request<any, any, IParams>,
   res: Response
 ) => {
+  const result = await cidadesProvider.deleteById(req.params.id);
+  if (result instanceof Error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: result.message,
+      },
+    });
+  }
   return res.status(StatusCodes.NO_CONTENT).send();
 };

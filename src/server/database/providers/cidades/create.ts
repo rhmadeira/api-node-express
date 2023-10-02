@@ -18,7 +18,6 @@ export const create = async (
       return Error("Error on create cidade");
     }
   } catch (err) {
-    console.log("deu erro");
     return Error("Error on create cidade");
   }
 };

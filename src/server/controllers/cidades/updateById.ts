@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ICidade } from "../../database/models";
+import { cidadesProvider } from "../../database/providers/cidades";
 
 interface IParams {
   id: number;
@@ -27,5 +28,14 @@ export const updateById = async (
   req: Request<any, any, IBodyProps>,
   res: Response
 ) => {
+  const result = await cidadesProvider.updateById(req.params.id, req.body);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: result.message,
+      },
+    });
+  }
   return res.status(StatusCodes.OK).send(StatusCodes.NO_CONTENT);
 };

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validation } from "../../shared/middlewares";
 import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
+import { cidadesProvider } from "../../database/providers/cidades";
 
 interface IQuery {
   id: number;
@@ -19,8 +20,15 @@ export const getById = async (
   req: Request<any, any, IQuery>,
   res: Response
 ) => {
-  return res.status(StatusCodes.OK).json({
-    id: 1,
-    nome: "São Paulo",
-  });
+  const result = await cidadesProvider.getById(req.params.id);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: result.message,
+      },
+    });
+  }
+
+  return res.status(StatusCodes.OK).json(result);
 };
