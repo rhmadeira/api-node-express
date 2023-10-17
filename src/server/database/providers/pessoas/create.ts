@@ -1,14 +1,17 @@
 import { ETableNames } from "../../ETableNames";
 import { Knex } from "../../knex";
 import { IPessoa } from "../../models";
-interface ICreateProps {
-  pessoa: Omit<IPessoa, "id">;
-}
 
 export const create = async (
   pessoa: Omit<IPessoa, "id">
 ): Promise<number | Error> => {
   try {
+    const [{ count }] = await Knex(ETableNames.cidade)
+      .where("id", "=", pessoa.cidadeId)
+      .count();
+
+    if (Number(count) === 0) return new Error("Cidade não encontrada");
+
     const [result] = await Knex(ETableNames.pessoa)
       .insert(pessoa)
       .returning("id");
@@ -18,9 +21,9 @@ export const create = async (
     } else if (typeof result === "number") {
       return result;
     } else {
-      return new Error("Error on create pessoa");
+      return new Error("Erro ao criar registro");
     }
   } catch (error) {
-    return new Error("Error on create pessoa");
+    return new Error("Erro ao criar registro");
   }
 };
