@@ -150,8 +150,6 @@ const cidadesDoPara = [
 export const seed = async (knex: Knex) => {
   const res = await knex(ETableNames.cidade).count();
 
-  if (res[0].count !== "0") return;
-
   const cidadesToInsert = cidadesDoPara.map((cidade) => ({
     nome: cidade,
   }));

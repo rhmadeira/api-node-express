@@ -11,7 +11,6 @@ export const getById = async (id: number): Promise<ICidade | Error> => {
     if (result) return result;
     return new Error("Error on get cidade by id");
   } catch (error) {
-    console.log(error);
     return new Error("Error on get cidade by id");
   }
 };

@@ -1,23 +1,23 @@
 import { ETableNames } from "../../ETableNames";
 import { Knex } from "../../knex";
-import { ICidade } from "../../models";
+import { IPessoa } from "../../models";
 
 export const getAll = async (
   page: number,
   limit: number,
   filter: string,
   id = 0
-): Promise<ICidade[] | Error> => {
+): Promise<IPessoa[] | Error> => {
   try {
-    const result = await Knex<ICidade>(ETableNames.cidade)
+    const result = await Knex<IPessoa>(ETableNames.pessoa)
       .select("*")
       .where("id", "=", Number(id))
       .orWhere("nome", "like", `%${filter}%`)
       .offset((page - 1) * limit)
       .limit(limit);
 
-    if (id > 0 && result.every((cidade) => cidade.id !== id)) {
-      const resultById = await Knex(ETableNames.cidade)
+    if (id > 0 && result.every((pessoa) => pessoa.id !== id)) {
+      const resultById = await Knex(ETableNames.pessoa)
         .select("*")
         .where("id", "=", Number(id))
         .first();
@@ -28,6 +28,6 @@ export const getAll = async (
 
     return result;
   } catch (error) {
-    return new Error("Error on get all cidades");
+    return new Error("Error on get all pessoas");
   }
 };
