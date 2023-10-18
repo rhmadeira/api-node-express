@@ -34,4 +34,53 @@ router.delete(
   cidadesController.deleteById
 );
 
+//teste de rota
+router.get("/theme", (req, res) => {
+  return res.status(StatusCodes.OK).json({
+    mode: "light",
+    primary: {
+      main: "#2196f3",
+      dark: "#1e88e5",
+      light: "#eef2f6",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#673ab7",
+      dark: "#4527a0",
+      light: "#ede7f6",
+      contrastText: "#ffffff",
+    },
+    success: {
+      main: "#00e676",
+      dark: "#388e3c",
+      light: "#b9f6ca",
+      contrastText: "#ffffff",
+    },
+    error: {
+      main: "#f44336",
+      dark: "#c62828",
+      light: "#ffcdd2",
+    },
+    warning: {
+      main: "#ffe57f",
+      dark: "#ffc107",
+      light: "#fff8e1",
+    },
+    grey: {
+      "50": "#f8fafc",
+      "100": "#eef2f6",
+      "200": "#e3e8ef",
+      "300": "#cdd5df",
+      "500": "#697586",
+      "600": "#4b5565",
+      "700": "#364152",
+      "900": "#121926",
+    },
+    background: {
+      default: "#cdd5df",
+      paper: "#ffffff",
+    },
+  });
+});
+
 export { router };
