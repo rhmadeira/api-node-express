@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { cidadesController } from "../controllers";
+import { cidadesController, pessoasController } from "../controllers";
 
 const router = Router();
 
@@ -25,13 +25,39 @@ router.get(
 );
 router.put(
   "/cidades/:id",
-  cidadesController.updateValidate,
+  cidadesController.updateByIdValidate,
   cidadesController.updateById
 );
 router.delete(
   "/cidades/:id",
   cidadesController.deleteValidate,
   cidadesController.deleteById
+);
+
+router.post(
+  "/pessoas",
+  pessoasController.createValidate,
+  pessoasController.create
+);
+router.get(
+  "/pessoas",
+  pessoasController.getAllValidate,
+  pessoasController.getAll
+);
+router.get(
+  "/pessoas/:id",
+  pessoasController.getByIdValidate,
+  pessoasController.getById
+);
+router.put(
+  "/pessoas/:id",
+  pessoasController.updateByIdValidate,
+  pessoasController.updateById
+);
+router.delete(
+  "/pessoas/:id",
+  pessoasController.deleteByIdValidade,
+  pessoasController.deleteById
 );
 
 //teste de rota
