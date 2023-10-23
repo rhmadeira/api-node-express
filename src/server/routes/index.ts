@@ -71,9 +71,9 @@ router.get("/theme", (req, res) => {
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#673ab7",
-      dark: "#4527a0",
-      light: "#ede7f6",
+      main: "#00e676",
+      dark: "#388e3c",
+      light: "#b9f6ca",
       contrastText: "#ffffff",
     },
     success: {
