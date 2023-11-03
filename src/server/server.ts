@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import "./shared/services/translationsYup";
 import "./shared/utils/translate";
 import { router } from "./routes";
 const cors = require("cors");
