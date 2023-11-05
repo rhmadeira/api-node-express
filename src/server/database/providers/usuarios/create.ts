@@ -1,4 +1,4 @@
-import { passwordCrypto } from "../../../shared/services";
+import { passwordCrypto } from "../../../shared/utils/passwordCrypto";
 import { ETableNames } from "../../ETableNames";
 import { Knex } from "../../knex";
 import { IUsuario } from "../../models";

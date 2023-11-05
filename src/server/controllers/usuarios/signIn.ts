@@ -4,6 +4,7 @@ import { usuariosProvider } from "../../database/providers/usuarios";
 import { validation } from "../../shared/middlewares";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
+import { passwordCrypto } from "../../shared/utils/passwordCrypto";
 
 interface IBodyProps extends Omit<IUsuario, "id" | "nome"> {}
 
@@ -30,8 +31,9 @@ export const signIn = async (
       },
     });
   }
+  const passwordMath = await passwordCrypto.verifyPassword(senha, result.senha);
 
-  if (result.senha !== senha) {
+  if (!passwordMath) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       erros: {
         default: "email ou senha incorretos",
