@@ -5,6 +5,7 @@ import { validation } from "../../shared/middlewares";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { passwordCrypto } from "../../shared/utils/passwordCrypto";
+import { JWTService } from "../../shared/utils/JWT";
 
 interface IBodyProps extends Omit<IUsuario, "id" | "nome"> {}
 
@@ -22,16 +23,19 @@ export const signIn = async (
   res: Response
 ) => {
   const { email, senha } = req.body;
-  const result = await usuariosProvider.getByEmail(email);
+  const usuario = await usuariosProvider.getByEmail(email);
 
-  if (result instanceof Error) {
+  if (usuario instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       erros: {
         default: "email ou senha incorretos",
       },
     });
   }
-  const passwordMath = await passwordCrypto.verifyPassword(senha, result.senha);
+  const passwordMath = await passwordCrypto.verifyPassword(
+    senha,
+    usuario.senha
+  );
 
   if (!passwordMath) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -40,8 +44,17 @@ export const signIn = async (
       },
     });
   } else {
+    const accessToken = JWTService.signIn({ uid: usuario.id });
+
+    if (accessToken === "JWT_SECRET_NOT_FOUND")
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        erros: {
+          default: "Erro ao gerar token",
+        },
+      });
+
     return res.status(StatusCodes.OK).json({
-      accessToken: "123456789",
+      accessToken,
     });
   }
 };
